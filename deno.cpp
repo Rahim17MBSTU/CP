@@ -60,31 +60,66 @@ void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
+     int q;
+     cin >> q;
+     vector<int>v(n),mx;in(v);
+     sort(all(v));
+     deque<int>dq,dq1;
      for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
+        if(i%2==0){
+            dq.push_back(v[i]);
+        }else{
+            dq.push_front(v[i]);
         }
-        
-     }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
 
      }
-     cout << mx << '\n';
+     for(int i=n-1;i>=0;i--){
+        if(i%2==0){
+            dq1.push_back(v[i]);
+        }else{
+            dq1.push_front(v[i]);
+        }
+     }
+    
      
+     int min_sum = 0,max_sum=0;
+     for(int i=1;i<n;i++){
+        //cout<<dq[i]<<" ";
+        min_sum+=dq[i]+dq[i-1];
+     }
+     //cout<<endl;
+     for(int i=1;i<n;i++){
+        //cout<<dq1[i]<<" ";
+        max_sum+=dq1[i]+dq1[i-1];
+     }
+     //cout<<endl;
+     //cout<<max_sum<<" "<<min_sum<<endl;
+    while(q--){
+        int x;
+        cin >> x;
+        if(x<min_sum){
+            cout<<-1<<endl;
+        }
+        else if(x>max_sum){
+            cout<<-1<<endl;
+        }
+        else{
+            if(x==max_sum){
+                for(auto u:dq1)cout<<u<<" ";
+                cout<<endl;
+                continue;
+            }
+            if(x==min_sum){
+                for(auto u:dq)cout<<u<<" ";
+                cout<<endl;
+                continue;
+            }
+            else{
+                cout<<-1<<endl;
+            }
+        }
+    }
+       
 }
 int32_t main()
 {

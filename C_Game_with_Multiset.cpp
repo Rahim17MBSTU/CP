@@ -56,41 +56,49 @@ int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 //--------------------------------------------------------------------------------------
 //						Code start here										   
 //-------------------------------------------------------------------------------------
+vector<int>v(30,0),vv(30,0);
+void power_calculation(){
+    int x = 1;
+    for(int i=0;i<=29;i++){
+        v[i] = x;
+        x*=2; 
+    }
+}
 void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
+     while(n--){
+        int x,value;
+        cin >> x >> value;
+        if(x == 1){
+            vv[value]++;
         }
-        
-     }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
+        else{
+            for(int i=29;i>=0;i--){
+                if(v[i] <= value && vv[i]>=1){
+                    
+                    int ans = value / v[i];
+                    ans = min(ans,vv[i]);
+                    
+                    value -=(ans*v[i]);
 
+                }
+                if(value == 0)break;
+            }
+          
+            if(value == 0)yes
+            else no
+        }
      }
-     cout << mx << '\n';
      
 }
 int32_t main()
 {
     fast 
     int t=1;
-    cin>>t;
+    power_calculation();
+    //cin>>t;
     while(t--)
     {
           solve();

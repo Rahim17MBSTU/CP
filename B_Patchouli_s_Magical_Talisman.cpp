@@ -4,7 +4,7 @@ using namespace std;
 #include<ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
- 
+
 typedef tree<long long , null_type, less<long long>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
 // 1.*A.find_by_order(index) 2.order_of_key(value) 3. delete using s.erase(s.find_by_order(idx))
 #define order(s, x) s.order_of_key(x);
@@ -22,7 +22,7 @@ typedef tree<long long , null_type, less<long long>, rb_tree_tag,tree_order_stat
 #define ff first
 #define ss second
 #define ve(x) vector<int> v(x)
-#define all(x)     x.begin(),x.end() 
+#define all(x)     x.begin(),x.end()
 #define rall(x)    x.rbegin(),x.rend()
 #define in(v)      for(auto &item:v) cin>>item;
 #define in2D(v)    for(auto &D:v)for(auto &u:D)cin>>u;
@@ -54,41 +54,44 @@ int bigmod(int base,int power)
 int dx[] = {-1, 1, 0, 0, -1, -1, 1, 1};
 int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 //--------------------------------------------------------------------------------------
-//						Code start here										   
+//						Code start here
 //-------------------------------------------------------------------------------------
 void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
+     vector<int>v(n);
+     int odd = 0,even = 0;
+     in(v);
      for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
+       int x = v[i];
+        if(x&1)odd++;
+        else
+        even++;
+     }
+     if(odd>=1){
+        cout<<even<<endl;
+        return;
+     }
+     else{
+        sort(all(v));
+        int mx = 1e9;
+        for(int i=0;i<n;i++){
+            int x =v[i],cnt=0;
+            while(x%2==0){
+                x/=2;
+                cnt++;
             }
-        }
-        
+          mx = min(mx,cnt);
+        } mx+=even-1;
+     cout<<mx<<endl;
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
 
-     }
-     cout << mx << '\n';
-     
+
 }
 int32_t main()
 {
-    fast 
+    fast
     int t=1;
     cin>>t;
     while(t--)

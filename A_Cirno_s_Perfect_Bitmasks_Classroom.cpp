@@ -60,31 +60,23 @@ void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
+     bitset<32>b(n);
+     int zero =__builtin_popcount(n);
+     if(zero>=2){
+        for(int i=0;i<32;i++){
+            if(b[i] == 1){
+                cout<<(1<<i)<<endl;
+                return;
             }
         }
-        
+     }else{
+        if(n==1)cout<<3<<endl;
+        else{
+            cout<<n+1<<endl;
+        }
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
-     }
-     cout << mx << '\n';
      
+       
 }
 int32_t main()
 {

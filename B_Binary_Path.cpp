@@ -11,7 +11,7 @@ typedef tree<long long , null_type, less<long long>, rb_tree_tag,tree_order_stat
 #define element(s ,x) s.find_by_order(x);
 //------------Defines part-------------
 #define fast ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-#define int long long int
+
 #define yes cout<<"YES\n";
 #define no cout<<"NO\n";
 
@@ -56,35 +56,77 @@ int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 //--------------------------------------------------------------------------------------
 //						Code start here										   
 //-------------------------------------------------------------------------------------
+int countPaths(const vector<string>& grid, const string& path) {
+    int n = grid[0].size();
+    int m = grid.size();
+
+    
+    vector<vector<int>> dp(m, vector<int>(n, 0));
+
+   
+    dp[0][0] = (grid[0][0] == path[0]) ? 1 : 0;
+
+    
+    for (int j = 1; j < n; ++j) {
+        if (grid[0][j] == path[j] && dp[0][j - 1] > 0)
+            dp[0][j] = 1;
+    }
+
+   
+    for (int i = 1; i < m; ++i) {
+        if (grid[i][0] == path[i] && dp[i - 1][0] > 0)
+            dp[i][0] = 1;
+    }
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+
+   
+    for (int i = 1; i < m; ++i) {
+        for (int j = 1; j < n; ++j) {
+            if (grid[i][j] == path[i + j] && (dp[i - 1][j] > 0 || dp[i][j - 1] > 0))
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+        }
+    }
+
+    
+    return dp[m - 1][n - 1];
+}
 void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
-        }
-        
-     }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
-     }
-     cout << mx << '\n';
      
+     vector<string>a(2);
+     string s="";
+      for (int i = 0; i < 2; ++i) {
+        cin >> a[i];
+    }
+
+     s+=a[0][0];
+     int row0= 0,row1=1;
+     for(int i=1;i<n;i++){
+         if(a[row0][i]<=a[row1][i-1]){
+            s+=a[row0][i];
+            
+         }else{
+            s+=a[row1][i-1];
+            for(int j=i;j<n;j++){
+                s+=a[row1][j];
+                
+                
+            }
+            cout<<s<<'\n';
+            cout<<countPaths(a,s)<<'\n';
+            return;
+         }
+     }
+     s+=a[1][n-1];
+     cout<<s<<endl;
+     cout<<countPaths(a,s)<<'\n';
 }
 int32_t main()
 {

@@ -56,35 +56,39 @@ int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 //--------------------------------------------------------------------------------------
 //						Code start here										   
 //-------------------------------------------------------------------------------------
+// int max_sub_Array_sum(vector<int>&v, int n){
+//   int max_so_far = v[0], max_ending_here = 0;
+//   for(int i = 1; i < n; i++){
+//     max_ending_here += v[i];
+//     if (max_so_far < max_ending_here){
+//       max_so_far = max_ending_here ;
+//     }
+//     if(max_ending_here < 0){
+//       max_ending_here = 0;
+//     }
+//   }
+//   return max_so_far; 
+//}
 void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
-        }
-        
+     vector<int>v(n);
+     in(v);
+     vector<int>pre(n+1,0);
+    
+     for(int i=n-1;i>=0;i--){
+      pre[i] = pre[i+1]+v[i];
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
-     }
-     cout << mx << '\n';
      
+    int sum = pre[0];
+    for(int i=1;i<n;i+=1){
+      if(pre[i]>0){
+        sum += pre[i];
+      }
+    }
+    cout << sum <<'\n';
+   
 }
 int32_t main()
 {
@@ -93,6 +97,6 @@ int32_t main()
     cin>>t;
     while(t--)
     {
-          solve();
+      solve();
     }
 }

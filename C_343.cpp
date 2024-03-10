@@ -56,41 +56,40 @@ int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 //--------------------------------------------------------------------------------------
 //						Code start here										   
 //-------------------------------------------------------------------------------------
+bool cal(int value){
+    string s=to_string(value);
+    for(int i=0;i<s.size()/2;i++){
+        if(s[i] == s[s.size()-1-i])
+        continue;
+        else{
+            return false;
+        }
+    }
+    return true;
+}
 void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
-        }
+     int ans = 1;
+     for(int i=1;i<=1e6;i++){
         
+        int x = i*i*i;
+        if(x>n){
+            break;
+        }
+        if(cal(x)){
+            ans = x;
+        }
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
-     }
-     cout << mx << '\n';
-     
+     cout<<ans<<endl;
+       
 }
 int32_t main()
 {
     fast 
     int t=1;
-    cin>>t;
+   // cin>>t;
     while(t--)
     {
           solve();

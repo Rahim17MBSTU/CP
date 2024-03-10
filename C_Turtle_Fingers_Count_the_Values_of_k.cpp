@@ -58,33 +58,39 @@ int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 //-------------------------------------------------------------------------------------
 void solve()
 {
-     int n;
-     cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
+     int n,m,k;
+     cin>>n>>m>>k;
+     set<int>s;
+     for(int i=1;1LL*i*i<=k;i++){
+        if(k%i==0){
+            s.insert(i);
+            s.insert(k/i);
         }
-        
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
+     int res = 0;
+     for(auto u:s){
+        bool ok=0;
+        for(int i=0;i<=30;i++){
+            int x = bigmod(n,i);
+            if(x>k)break;
+            for(int j=0;j<=30;j++){
+                int y = bigmod(m,j);
+                if(x*y*u>k)break;
+                if((x*y*u)==k){
+                    //cout<<u<<" "<<x<<" "<<y<<endl;
+                    ok=1;
+                    res++;
+                    break;
+                }
 
+            }
+            if(ok==1)break;
+        }
      }
-     cout << mx << '\n';
+     cout<<res<<'\n';
      
+     
+       
 }
 int32_t main()
 {

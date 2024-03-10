@@ -60,37 +60,77 @@ void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
+     int t;
+     cin >> t;
+     map<int,int>mp,mp1;
+     for(int i=1;i<=n;i++){
+        mp[i]=0;
+        mp1[0]++;
+     }
+     int dif=1;
+     vector<int>v(n+2,0);
+     for(int i=1;i<=t;i++){
+        int x , y;
+        cin >> x >> y;
+        if(n==1){
+            cout<<1<<endl;
+            continue;
+        }
+        if(v[x]==y){
+            cout<<mp1.size()<<endl;
+            continue;
+        }
+        else{
+            if(i==1){
+                cout<<2<<'\n';
+                mp1[0]--;
+                v[x]=y;
+                mp1[y]++;
             }
+            else{
+                if(v[x]==0)
+                {
+                    v[x]=y;
+                   if(mp1[0]==1)
+                   {
+                   mp1.erase(0) ;
+                   mp1[y]++;
+                   cout<<mp1.size()<<endl;
+                   }
+                   else
+                   {
+                     mp1[0]--;
+                     mp1[y]++;
+                     cout<<mp1.size()<<endl;
+                   }
+
+              }else{
+                int k = v[x] ;
+                 v[x] = y;
+                if(mp1[k]==1){
+                    mp1.erase(k);
+                    //mp1[y]++;
+                    cout<<mp1.size()<<endl;
+                }else{
+                    mp1[k]--;
+                    mp1[y]++;
+                    cout<<mp1.size()<<endl;
+                }
+                // mp1[y]++;
+              }
+          }
         }
         
+        
+        
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
-     }
-     cout << mx << '\n';
-     
+       
 }
 int32_t main()
 {
     fast 
     int t=1;
-    cin>>t;
+    //cin>>t;
     while(t--)
     {
           solve();

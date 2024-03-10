@@ -59,32 +59,21 @@ int dy[] = {0, 0, -1, 1, -1, 1, -1, 1};
 void solve()
 {
      int n;
-     cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
+     cin >> n;
+     int ans = 1,x = 1;
+     for(int i=0;;i++)
+     {
+        x=x*2;
+        if(x<=n){
+            ans = x;
+           
         }
-        
-     }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
+        else{
+            break;
+        }
 
      }
-     cout << mx << '\n';
-     
+     cout<<ans<<endl;
 }
 int32_t main()
 {

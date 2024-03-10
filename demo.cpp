@@ -60,37 +60,20 @@ void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
-     map<int,int>mp;
-     for(int i=0;i<n;i++){
-        int x;
-        cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
-        }
-        
-     }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
-     }
-     cout << mx << '\n';
-     
+    int m;
+    cin >> m;
+    if(n<m){
+        cout<<"Dr. Chaz will have "<<m-n<<" pieces of chicken left over!\n";
+    }
+    else{
+        cout<<"Dr. Chaz needs "<<abs(n-m)<<" more pieces of chicken!"<<'\n';
+    }
 }
 int32_t main()
 {
     fast 
     int t=1;
-    cin>>t;
+    //cin>>t;
     while(t--)
     {
           solve();

@@ -60,31 +60,27 @@ void solve()
 {
      int n;
      cin>>n;
-     bitset<31>b[n];
      map<int,int>mp;
      for(int i=0;i<n;i++){
-        int x;
+        int x ;
         cin >> x;
-        b[i] = x;
-        for(int j=0;j<=30;j++){
-            int y = 1<<j;
-            if((y&x)!=0){
-              mp[j]++;
-            }
-        }
-        
+        mp[x]++;
      }
-     for(int i=0;i<n;i++)cout<<b[i]<<"\n";
-     int mx = 0;
-     for(int i=0;i<=30;i++){
-         int zero = n-mp[i];
-         int one = mp[i];
-         int x = max(zero,one);
-         mx = max(mx,x);
-
+     vector<int>res;
+     for(auto u:mp){
+        res.push_back(u.second);
      }
-     cout << mx << '\n';
-     
+     sort(all(res));
+     int mx = res.back();
+     int sum = accumulate(all(res),0);
+     int ans = INT_MAX;
+     for(int i=1;i<=res.back();i++){
+        int x = lower_bound(all(res),i)-res.begin();
+        int cnt = res.size() - x ;
+        x  = sum - (cnt * i); 
+        ans = min(ans,x);
+     }
+     cout << ans << '\n';
 }
 int32_t main()
 {
