@@ -1,37 +1,22 @@
-#include <bits/stdc++.h>
+#include<iostream>
 using namespace std;
-
-const int N = 1e9 + 10;
-vector<int> v({1, 3, 6, 10, 15});
-
-int calculation(int indx, int sum, vector<int> &dp) {
-    if (indx == 5) {
-        return (sum == 0) ? 0 : INT_MAX / 2;
+#include<bits/stdc++.h>
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        vector<int>v{0,1,2,1,2,3,1,2,3,2,1,2,2,2,3,1,2,3,2,3,2,2,3,3,3,2,3,3,3,4,2};
+        if(n<30)
+        {
+            cout << v[n] <<endl;continue;
+        }
+        int res =( n/15)+ v[n%15];
+        int x =(n-15)/15;
+        int res1 = (n-15)/15 + v[n-(x*15)];
+        cout << min (res,res1) << endl;
+        
     }
-    if (dp[sum] != -1) {
-        return dp[sum];
-    }
-    int take = INT_MAX, nontake = 0;
-    if (sum >= v[indx]) {
-        take = 1 + calculation(indx, sum - v[indx], dp);
-    }
-    nontake = calculation(indx + 1, sum, dp);
-    return dp[sum] = min(take, nontake);
-}
-
-void solve() {
-    int n;
-    cin >> n;
-    vector<int> dp(n + 1, -1);
-    int ans = calculation(0, n, dp);
-    cout << (ans == INT_MAX / 2 ? -1 : ans) << '\n';
-}
-
-int main() {
-    int t = 1;
-    cin >> t;
-    while (t--) {
-        solve();
-    }
-    return 0;
 }
